@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        ul {
+            list-style-type: none;
+            margin-top: -20px;
+            margin-left: -20px;
+            margin-right: -20px;
+            padding: 0;
+            overflow: hidden;
+            background-color: rgb(6,6,64); 
+            font-size: 20px;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white; 
+            text-align: center;
+            padding: 14px 16px; 
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #5cb85c; 
+        }
+        body {
+            height: 100vh;
+            margin: 0;
+            background-image: linear-gradient(to top left, rgb(6,6,64) 50%, white 50%);
+            background-attachment: fixed;
+            color: #073707;;
+            padding: 20px;
+        }
+        .complaint-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around; /* Aligns the cards */
+        }
+        .complaint-card {
+            background-color:cadetblue;
+            color:white;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: calc(33.33% - 80px); 
+        }
+        .complaint-card h3 {
+            margin-top: 0;
+        }
+        @media (max-width: 768px) {
+            .complaint-card {
+                width: calc(50% - 30px); 
+            }
+        }
+        @media (max-width: 480px) {
+            .complaint-card {
+                width: 100%; 
+            }
+        }
+        .complaint-card:hover{
+             border: 2px solid  rgb(6,6,64);
+        }
+        #select{
+            margin-left: 650px;
+            padding: 10px;
+            background-color: #194d19; 
+            color:white;
+            border: 4px solid #eee;
+        }
+       
+    </style>
+
+</head>
+<body>
+    <ul>
+        <li><a href="/home">Home</a></li>
+        <li><a href="/complaints">Submit a complaint</a></li>
+        
+        <li><a href="/login" style="margin-left: 900px;">login</a></li>
+        <li><a href="/signup">signup</a></li>
+        <li><a href="/signup">logout</a></li>
+    </ul>
+    <form action="/home" method="post">
+        <select name='filtervalue' id="select" onchange='this.form.submit()'>
+            <option value='' hidden>Department</option>
+            <option value='cse'>
+                CSE
+            </option>
+            <option value='it'>
+                IT
+            </option>
+            <option value='csbs'>
+                CS&BS
+            </option>
+            <option value='aids'>
+                AI&DS
+            </option>
+            <option value='aiml'>
+                AI&ML
+            </option>
+            <option value="ece">
+                ECE
+            </option>
+            <option value="eee">
+                EEE
+            </option>
+            <hr />
+            <option value='all'>
+                &#10006; Clear
+            </option>
+        </select>
+    <div class="complaint-container">
+        <% complaints.forEach(complaint => { %>
+            <div class="complaint-card">
+                <h3><%= complaint.comp %> - <%= complaint.name %></h3>
+                <p><strong>Register No:</strong> <%= complaint.reg %></p>
+                <p><strong>Department:</strong> <%= complaint.dept %></p>
+                <p><strong>Complaint:</strong> <%= complaint.complaint %></p>
+                <p>Submitted on: <%= complaint.createdAt.toDateString() %></p>
+                <form method="post" action="/likes">
+                    <input type="hidden" name="thumbsup" value="<%= complaint._id %>"/>
+                    <button type="submit" class="material-symbols-outlined">👍</button>    
+                </form>
+                <span class="counter"><%= complaint.likes || 0 %></span>
+            </div>
+        <% }) %>
+        
+    </div>
+   </form>
+</body>
+</html>
+

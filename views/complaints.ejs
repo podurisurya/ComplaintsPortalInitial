@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: linear-gradient(to top left, rgb(6,6,64) 50%, white 50%);
+    background-attachment: fixed;
+    color: white;
+}
+
+.login-container {
+    background-color: rgba(0,0,0,0.5);
+    padding: 30px 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 100px);
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.input-group input, .input-group select, .input-group textarea {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+
+.input-group select {
+    appearance: none; 
+    background-position: right 10px top 50%;
+    background-repeat: no-repeat;
+    padding-right: 20px;
+}    
+</style>
+</head>
+<body>
+    <div class="login-container">
+    <h1>Submit A Complaint</h1>
+    <form action="/complaints" method="post">
+        <div class="input-group">
+        <label>Name:</label>
+        <input type="text" name="nam">
+        </div>
+        <div class="input-group">
+        <label>Register No:</label>
+        <input type="text" name="reg">
+    </div>
+        <div class="input-group">
+        <label>Complaint type:</label>
+        <input type="text" name="comp">
+    </div>
+        <div class="input-group">
+            <label>Department:</label>
+        <select name="dept">
+            <option value="cse">CSE</option>
+            <option value="it">IT</option>
+            <option value="ece">ECE</option>
+            <option value="eee">EEE</option>
+            <option value="aids">AIDS</option>
+            <option value="aiml">AIML</option>
+            <option value="csbs">CS&BS</option>
+        </select>
+    </div>
+        <div class="input-group">
+        <label>Complaint:</label>
+        <textarea rows="12" cols="6" name="complaint" required></textarea>
+    </div>
+        <button type="submit">Submit</button>
+    </form>
+    </div>
+</body>
+</html>
