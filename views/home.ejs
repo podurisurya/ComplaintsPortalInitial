@@ -120,22 +120,25 @@
             </option>
         </select>
     <div class="complaint-container">
-        <% complaints.forEach(complaint => { %>
-            <div class="complaint-card">
-                <h3><%= complaint.comp %> - <%= complaint.name %></h3>
-                <p><strong>Register No:</strong> <%= complaint.reg %></p>
-                <p><strong>Department:</strong> <%= complaint.dept %></p>
-                <p><strong>Complaint:</strong> <%= complaint.complaint %></p>
-                <p>Submitted on: <%= complaint.createdAt.toDateString() %></p>
-                <form method="post" action="/likes">
-                    <input type="hidden" name="thumbsup" value="<%= complaint._id %>"/>
-                    <button type="submit" class="material-symbols-outlined">👍</button>    
+    <% complaints.forEach(complaint => { %>
+        <div class="complaint-card">
+            <h3><%= complaint.comp %> - <%= complaint.name %></h3>
+            <p><strong>Register No:</strong> <%= complaint.reg %></p>
+            <p><strong>Department:</strong> <%= complaint.dept %></p>
+            <p><strong>Complaint:</strong> <%= complaint.complaint %></p>
+            <p>Submitted on: <%= complaint.createdAt.toDateString() %></p>
+            
+            <div class="like-section">
+                <form method="POST" action="/likes" class="like-form">
+                    <input type="hidden" name="thumbsup" value="<%= complaint._id.toString() %>">
+                    <button type="submit" class="like-button">
+                        👍 <span class="counter"><%= complaint.likes || 0 %></span>
+                    </button>
                 </form>
-                <span class="counter"><%= complaint.likes || 0 %></span>
             </div>
-        <% }) %>
-        
-    </div>
+        </div>
+    <% }) %>
+</div>
    </form>
 </body>
 </html>

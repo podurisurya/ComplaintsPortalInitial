@@ -147,16 +147,20 @@ app.post("/home", async (req, res) => {
 
 
 app.post("/likes", async (req, res) => {
-    const likesId = req.body.thumbsup;
-
     try {
-        await Complaint.updateOne(
-            { _id:ObjectId(likesId) }, 
-            { $inc: { likes: 1 } }
+        const result = await Complaint.findByIdAndUpdate(
+            req.body.thumbsup, 
+            { $inc: { likes: 1 } },
+            { new: true } // Returns the updated document
         );
+        
+        if (!result) {
+            return res.status(404).send("Complaint not found");
+        }
+        
         res.redirect("/home");
     } catch (error) {
-        console.log("Error updating likes:", error);
+        console.error("Error updating likes:", error);
         res.status(500).send("Error updating likes");
     }
 });
@@ -175,3 +179,32 @@ const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+
+// // Add this script to your EJS file or a separate JS file
+// document.querySelectorAll('.like-form').forEach(form => {
+//     form.addEventListener('submit', async (e) => {
+//         e.preventDefault();
+        
+//         const formData = new FormData(form);
+//         const complaintId = formData.get('thumbsup');
+//         const counter = form.querySelector('.counter');
+        
+//         try {
+//             const response = await fetch('/likes', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/x-www-form-urlencoded',
+//                 },
+//                 body: `thumbsup=${complaintId}`
+//             });
+            
+//             if (response.ok) {
+//                 const currentLikes = parseInt(counter.textContent) || 0;
+//                 counter.textContent = currentLikes + 1;
+//             }
+//         } catch (error) {
+//             console.error('Error:', error);
+//         }
+//     });
+// });
