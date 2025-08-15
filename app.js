@@ -12,7 +12,8 @@ const dbUrl = process.env.DB_URL;
 
 app.use(bp.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-const account = require("./auth.json");
+const account = JSON.parse(process.env.FIREBASE_CONFIG);
+
 const MongoClient = require("mongodb/lib/mongo_client");
 
 admin.initializeApp({
@@ -170,7 +171,7 @@ app.get("/home", async (req, res) => {
     }
 });
 
-
-app.listen(3002, () => {
-    console.log("Server starts at port 3002");
+const PORT = process.env.PORT || 3002;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
