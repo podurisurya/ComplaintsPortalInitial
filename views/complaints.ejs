@@ -3,117 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Submit Complaint - Complaints Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-image: linear-gradient(to top left, rgb(6,6,64) 50%, white 50%);
-    background-attachment: fixed;
-    color: white;
-}
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
 
-.login-container {
-    background-color: rgba(0,0,0,0.5);
-    padding: 30px 50px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: calc(100% - 100px);
-    max-width: 500px;
-    box-sizing: border-box;
-}
+        /* Navigation Bar */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            margin: -2rem -2rem 2rem -2rem;
+            border-radius: 0 0 16px 16px;
+        }
 
-.login-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: white;
-}
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-.input-group {
-    margin-bottom: 15px;
-}
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            text-decoration: none;
+        }
 
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: white;
-}
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
 
-.input-group input, .input-group select, .input-group textarea {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-.input-group textarea {
-    resize: vertical;
-}
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
 
-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #5cb85c;
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-}
+        .nav-links a.primary {
+            background: #667eea;
+            color: white;
+        }
 
-button:hover {
-    background-color: #4cae4c;
-}
+        .nav-links a.primary:hover {
+            background: #5568d3;
+        }
 
+        .form-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+        }
 
-.input-group select {
-    appearance: none; 
-    background-position: right 10px top 50%;
-    background-repeat: no-repeat;
-    padding-right: 20px;
-}    
-</style>
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header i {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .form-container h1 {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-container p.subtitle {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-group select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 3rem;
+            cursor: pointer;
+        }
+
+        .input-group textarea {
+            padding: 0.875rem 1rem;
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus,
+        .input-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+            color: #999;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                margin: -2rem -2rem 2rem -2rem;
+                padding: 1rem;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .nav-links a {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+
+            .form-container {
+                padding: 1.5rem 1rem;
+            }
+
+            .form-container h1 {
+                font-size: 1.75rem;
+            }
+
+            .form-header i {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container">
-    <h1>Submit A Complaint</h1>
-    <form action="/complaints" method="post">
-        <div class="input-group">
-        <label>Name:</label>
-        <input type="text" name="nam">
+    <nav>
+        <div class="nav-container">
+            <a href="/home" class="nav-logo">
+                <i class="fas fa-comments"></i> Complaints Portal
+            </a>
+            <ul class="nav-links">
+                <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/complaints" class="primary"><i class="fas fa-plus-circle"></i> Submit Complaint</a></li>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/signup"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            </ul>
         </div>
-        <div class="input-group">
-        <label>Register No:</label>
-        <input type="text" name="reg">
-    </div>
-        <div class="input-group">
-        <label>Complaint type:</label>
-        <input type="text" name="comp">
-    </div>
-        <div class="input-group">
-            <label>Department:</label>
-        <select name="dept">
-            <option value="cse">CSE</option>
-            <option value="it">IT</option>
-            <option value="ece">ECE</option>
-            <option value="eee">EEE</option>
-            <option value="aids">AIDS</option>
-            <option value="aiml">AIML</option>
-            <option value="csbs">CS&BS</option>
-        </select>
-    </div>
-        <div class="input-group">
-        <label>Complaint:</label>
-        <textarea rows="12" cols="6" name="complaint" required></textarea>
-    </div>
-        <button type="submit">Submit</button>
-    </form>
+    </nav>
+
+    <div class="form-container">
+        <div class="form-header">
+            <i class="fas fa-file-alt"></i>
+            <h1>Submit a Complaint</h1>
+            <p class="subtitle">Fill in the details below to submit your complaint</p>
+        </div>
+        <form action="/complaints" method="post">
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="nam"><i class="fas fa-user"></i> Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="nam" name="nam" placeholder="Enter your name" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="reg"><i class="fas fa-id-card"></i> Register No</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-id-card"></i>
+                        <input type="text" id="reg" name="reg" placeholder="Enter register number" required>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="comp"><i class="fas fa-tag"></i> Complaint Type</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-tag"></i>
+                    <input type="text" id="comp" name="comp" placeholder="e.g., Infrastructure, Academic, etc." required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="dept"><i class="fas fa-building"></i> Department</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-building"></i>
+                    <select id="dept" name="dept" required>
+                        <option value="">Select Department</option>
+                        <option value="cse">CSE</option>
+                        <option value="it">IT</option>
+                        <option value="ece">ECE</option>
+                        <option value="eee">EEE</option>
+                        <option value="aids">AI&DS</option>
+                        <option value="aiml">AI&ML</option>
+                        <option value="csbs">CS&BS</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="complaint"><i class="fas fa-comment"></i> Complaint Details</label>
+                <textarea id="complaint" name="complaint" placeholder="Describe your complaint in detail..." required></textarea>
+            </div>
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i>
+                Submit Complaint
+            </button>
+        </form>
     </div>
 </body>
 </html>

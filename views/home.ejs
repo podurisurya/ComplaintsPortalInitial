@@ -3,143 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Complaints Portal - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        
-        ul {
-            list-style-type: none;
-            margin-top: -20px;
-            margin-left: -20px;
-            margin-right: -20px;
+        * {
+            margin: 0;
             padding: 0;
-            overflow: hidden;
-            background-color: rgb(6,6,64); 
-            font-size: 20px;
+            box-sizing: border-box;
         }
 
-        li {
-            float: left;
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            padding-bottom: 40px;
         }
 
-        li a {
-            display: block;
-            color: white; 
-            text-align: center;
-            padding: 14px 16px; 
+        /* Navigation Bar */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
             text-decoration: none;
         }
 
-        li a:hover {
-            background-color: #5cb85c; 
-        }
-        body {
-            height: 100vh;
-            margin: 0;
-            background-image: linear-gradient(to top left, rgb(6,6,64) 50%, white 50%);
-            background-attachment: fixed;
-            color: #073707;;
-            padding: 20px;
-        }
-        .complaint-container {
+        .nav-links {
             display: flex;
+            list-style: none;
+            gap: 1rem;
+            align-items: center;
             flex-wrap: wrap;
-            justify-content: space-around; /* Aligns the cards */
         }
-        .complaint-card {
-            background-color:cadetblue;
-            color:white;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: calc(33.33% - 80px); 
-        }
-        .complaint-card h3 {
-            margin-top: 0;
-        }
-        @media (max-width: 768px) {
-            .complaint-card {
-                width: calc(50% - 30px); 
-            }
-        }
-        @media (max-width: 480px) {
-            .complaint-card {
-                width: 100%; 
-            }
-        }
-        .complaint-card:hover{
-             border: 2px solid  rgb(6,6,64);
-        }
-        #select{
-            margin-left: 650px;
-            padding: 10px;
-            background-color: #194d19; 
-            color:white;
-            border: 4px solid #eee;
-        }
-       
-    </style>
 
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-links a.primary:hover {
+            background: #5568d3;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-section h2 {
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .filter-form {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        #select {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: white;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            padding-right: 3rem;
+        }
+
+        #select:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        #select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Complaint Cards Container */
+        .complaint-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .complaint-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .complaint-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .complaint-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .complaint-card h3 {
+            color: #333;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .complaint-card p {
+            color: #666;
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .complaint-card strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .complaint-card .dept-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .complaint-card .date {
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .like-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .like-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .like-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .like-button:active {
+            transform: scale(0.98);
+        }
+
+        .counter {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .complaint-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .nav-links a {
+                flex: 1;
+                justify-content: center;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-form {
+                width: 100%;
+            }
+
+            #select {
+                width: 100%;
+            }
+
+            .main-container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-logo {
+                font-size: 1.25rem;
+            }
+
+            .complaint-card {
+                padding: 1.25rem;
+            }
+
+            .filter-section h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <ul>
-        <li><a href="/home">Home</a></li>
-        <li><a href="/complaints">Submit a complaint</a></li>
-        
-        <li><a href="/login" style="margin-left: 900px;">login</a></li>
-        <li><a href="/signup">signup</a></li>
-        <li><a href="/signup">logout</a></li>
-    </ul>
-    <form action="/home" method="post">
-        <select name='filtervalue' id="select" onchange='this.form.submit()'>
-            <option value='' hidden>Department</option>
-            <option value='cse'>
-                CSE
-            </option>
-            <option value='it'>
-                IT
-            </option>
-            <option value='csbs'>
-                CS&BS
-            </option>
-            <option value='aids'>
-                AI&DS
-            </option>
-            <option value='aiml'>
-                AI&ML
-            </option>
-            <option value="ece">
-                ECE
-            </option>
-            <option value="eee">
-                EEE
-            </option>
-            <hr />
-            <option value='all'>
-                &#10006; Clear
-            </option>
-        </select>
-    <div class="complaint-container">
-    <% complaints.forEach(complaint => { %>
-        <div class="complaint-card">
-            <h3><%= complaint.comp %> - <%= complaint.name %></h3>
-            <p><strong>Register No:</strong> <%= complaint.reg %></p>
-            <p><strong>Department:</strong> <%= complaint.dept %></p>
-            <p><strong>Complaint:</strong> <%= complaint.complaint %></p>
-            <p>Submitted on: <%= complaint.createdAt.toDateString() %></p>
-            
-            <div class="like-section">
-                <form method="POST" action="/likes" class="like-form">
-                    <input type="hidden" name="thumbsup" value="<%= complaint._id.toString() %>">
-                    <button type="submit" class="like-button">
-                        👍 <span class="counter"><%= complaint.likes || 0 %></span>
-                    </button>
-                </form>
-            </div>
+    <nav>
+        <div class="nav-container">
+            <a href="/home" class="nav-logo">
+                <i class="fas fa-comments"></i> Complaints Portal
+            </a>
+            <ul class="nav-links">
+                <li><a href="/home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/complaints"><i class="fas fa-plus-circle"></i> Submit Complaint</a></li>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/signup" class="primary"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+            </ul>
         </div>
-    <% }) %>
-</div>
-   </form>
+    </nav>
+
+    <div class="main-container">
+        <form action="/home" method="post" class="filter-form">
+            <div class="filter-section">
+                <h2><i class="fas fa-filter"></i> Filter Complaints</h2>
+                <select name='filtervalue' id="select" onchange='this.form.submit()'>
+                    <option value='' hidden>Select Department</option>
+                    <option value='cse'>CSE</option>
+                    <option value='it'>IT</option>
+                    <option value='csbs'>CS&BS</option>
+                    <option value='aids'>AI&DS</option>
+                    <option value='aiml'>AI&ML</option>
+                    <option value="ece">ECE</option>
+                    <option value="eee">EEE</option>
+                    <option value='all'>Clear Filter</option>
+                </select>
+            </div>
+        </form>
+
+        <div class="complaint-container">
+            <% if (complaints && complaints.length > 0) { %>
+                <% complaints.forEach(complaint => { %>
+                    <div class="complaint-card">
+                        <h3><i class="fas fa-exclamation-circle"></i> <%= complaint.comp %> - <%= complaint.name %></h3>
+                        <p><strong><i class="fas fa-id-card"></i> Register No:</strong> <%= complaint.reg %></p>
+                        <p><strong><i class="fas fa-building"></i> Department:</strong> 
+                            <span class="dept-badge"><%= complaint.dept.toUpperCase() %></span>
+                        </p>
+                        <p><strong><i class="fas fa-comment"></i> Complaint:</strong></p>
+                        <p style="margin-left: 1rem; margin-top: 0.5rem;"><%= complaint.complaint %></p>
+                        <p class="date"><i class="fas fa-calendar"></i> Submitted on: <%= complaint.createdAt.toDateString() %></p>
+                        
+                        <div class="like-section">
+                            <form method="POST" action="/likes" class="like-form">
+                                <input type="hidden" name="thumbsup" value="<%= complaint._id.toString() %>">
+                                <button type="submit" class="like-button">
+                                    <i class="fas fa-thumbs-up"></i>
+                                    <span class="counter"><%= complaint.likes || 0 %></span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <h3>No Complaints Found</h3>
+                    <p>Be the first to submit a complaint or try a different filter.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
 </body>
 </html>
 

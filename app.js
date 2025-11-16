@@ -6,28 +6,58 @@ const app = express();
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const { ObjectId } = require('mongodb');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 const dbUrl = process.env.DB_URL;
 
 
 app.use(bp.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-const account = JSON.parse(process.env.FIREBASE_CONFIG);
+app.set("views", path.join(__dirname, "views"));
 
 const MongoClient = require("mongodb/lib/mongo_client");
 
-admin.initializeApp({
-    credential: admin.credential.cert(account),
-});
-mongoose.connect(dbUrl
-    , {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(() => {
-    console.log("Connected to MongoDB");
-}).catch((err) => {
-    console.error("MongoDB connection error: ", err);
-});
+// Initialize Firebase Admin
+try {
+    const serviceAccountPath = path.join(__dirname, 'firebaseServiceAccount.json');
+    
+    // Try to read from file first
+    if (fs.existsSync(serviceAccountPath)) {
+        const serviceAccount = require(serviceAccountPath);
+        admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount),
+        });
+        console.log("Firebase Admin initialized successfully from firebaseServiceAccount.json");
+    } 
+    // Fallback to environment variable
+    else if (process.env.FIREBASE_CONFIG) {
+        const account = JSON.parse(process.env.FIREBASE_CONFIG);
+        admin.initializeApp({
+            credential: admin.credential.cert(account),
+        });
+        console.log("Firebase Admin initialized successfully from environment variable");
+    } 
+    else {
+        console.warn("Firebase configuration not found. Firebase features will not be available.");
+    }
+} catch (error) {
+    console.error("Error initializing Firebase Admin:", error.message);
+    console.warn("Firebase features will not be available.");
+}
+if (dbUrl) {
+    mongoose.connect(dbUrl, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }).then(() => {
+        console.log("Connected to MongoDB");
+    }).catch((err) => {
+        console.error("MongoDB connection error: ", err);
+        console.warn("MongoDB connection failed. Some features may not work.");
+    });
+} else {
+    console.warn("DB_URL not found in environment variables. MongoDB features will not be available.");
+}
 
 const complaintSchema = new mongoose.Schema({
     name: String,
@@ -55,11 +85,11 @@ app.get("/signup",(req,res)=>{
     res.render("signup",{error:" "});
 })
 app.post("/signup", async (req, res) => {
-    const us = req.body.username;
-    const em = req.body.email;
-    const ps = req.body.password;
-    const db = admin.firestore();
     try {
+        const us = req.body.username;
+        const em = req.body.email;
+        const ps = req.body.password;
+        const db = admin.firestore();
         const userRecord = await admin.auth().createUser({
             displayName: us,
             email: em,
@@ -84,10 +114,10 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const db = admin.firestore();
     try {
+        const email = req.body.email;
+        const password = req.body.password;
+        const db = admin.firestore();
         const userres = await admin.auth().getUserByEmail(email);
         const userdetails = await db.collection("users").doc(userres.uid).get();
         if (userdetails.exists) {
